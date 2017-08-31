@@ -41,7 +41,8 @@ module TimesheetsAppTimeReportPatch
       unless @criteria.empty?
         time_columns = %w(tyear tmonth tweek spent_on)
         @hours = []
-        @scope.includes(:issue, :activity).
+        @scope.includes(:activity).
+            joins("LEFT OUTER JOIN issues i2 ON i2.id = time_entries.issue_id").
             group(@criteria.collect{|criteria| @available_criteria[criteria][:sql]} + time_columns).
             joins(@criteria.collect{|criteria| @available_criteria[criteria][:joins]}.compact).
             where(@criteria.collect{|criteria| @available_criteria[criteria][:conditions]}.compact).
