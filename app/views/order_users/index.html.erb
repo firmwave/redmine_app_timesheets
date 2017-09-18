@@ -57,6 +57,9 @@
             </tr></thead>
             <tbody>
             <% @members.each do |member| %>
+               <% if member == nil
+                  next 
+                  end %>
                 <% next if member.new_record? %>
                 <% if member.is_a?(User)
                     listed << member %>
